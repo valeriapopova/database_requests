@@ -110,6 +110,9 @@ insert into Albums
 
 insert into Albums 
 	values(8, 'good boy', 2008 );
+	
+insert into Albums 
+	values(9, 'my new life', 2017 );	
 
 insert into tracks 
 	values(1,'first', 8 , 3.5);
@@ -228,8 +231,6 @@ insert into SingerAlbum
 insert into SingerAlbum 
 	values(8, 7, 1);
 	
-insert into Albums 
-	values(9, 'my new life', 2017 );
 
 insert into SingerAlbum 
 	values(9, 9, 5);

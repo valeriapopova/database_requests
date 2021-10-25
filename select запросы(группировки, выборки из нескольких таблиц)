@@ -1,0 +1,76 @@
+#количество исполнителей в каждом жанре;
+
+select genre_id, count(singer_id) from GenresSinger 
+	group by genre_id;
+  
+#количество треков, вошедших в альбомы 2019-2020 годов;
+
+select t.track_name, a.year_of_issue from albums a
+	left join tracks t on t.album_id = a.id
+	where a.year_of_issue between 2019 and 2020;
+
+#средняя продолжительность треков по каждому альбому;
+
+select album_id, avg(duration) from tracks 
+	group by album_id;
+  
+#все исполнители, которые не выпустили альбомы в 2020 году;
+
+select singer_name from singers s
+	where singer_name not in (
+		select singer_name from singers 
+			left join singeralbum sa on s.id = sa.singer_id 
+			left join albums a on sa.album_id = a.id
+			where a.year_of_issue = 2020
+		);	
+
+#названия сборников, в которых присутствует конкретный исполнитель (выберите сами);
+
+select c.name from collection c
+	left join collection_of_tracks ct on c.id = ct.collection_id 
+	left join tracks t on t.id = ct.tracks_id 
+	left join albums a on a.id = t.id
+	left join singeralbum sa on sa.id = a.id 
+	left join singers s on s.id = sa.id 
+	where alias like '%%Ирина Аллегрова%%';
+
+#название альбомов, в которых присутствуют исполнители более 1 жанра;
+
+select a.album_name from albums a
+	left join singeralbum sa on a.id = sa.album_id 
+	left join singers s on s.id = sa.singer_id 
+	left join genressinger gs on s.id = gs.singer_id 
+	left join genres g on g.id = gs.genre_id
+	group by a.album_name
+	having count(distinct genre_id) > 1; 
+
+#наименование треков, которые не входят в сборники;
+
+select t.track_name from tracks t
+	left join collection_of_tracks ct on t.id = ct.tracks_id 
+	where ct.tracks_id is null;
+
+#исполнителя(-ей), написавшего самый короткий по продолжительности трек (теоретически таких треков может быть несколько);
+
+select s.singer_name , t.duration from tracks t
+	left join albums a on a.id = t.album_id 
+	left join singeralbum sa on a.id = sa.album_id  
+	left join singers s on s.id = sa.singer_id
+	where t.duration = (
+	select min(duration) from tracks)
+	order by s.singer_name;
+  
+  #название альбомов, содержащих наименьшее количество треков.
+  
+  select a.album_name from albums a 
+	left join tracks t on t.album_id = a.id
+	where t.album_id in (
+	select album_id from tracks
+		group by album_id
+		having count(id) = (
+		select count(id) from tracks 
+			group by album_id
+			order by count
+			limit 1
+			)
+			);

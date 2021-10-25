@@ -62,7 +62,10 @@ insert into Albums
 	values(8, 'good boy', 2008 );
 	
 insert into Albums 
-	values(9, 'my new life', 2017 );	
+	values(9, 'my new life', 2017 );
+
+insert into Albums 
+	values(10, 'clapp', 2020 );
 
 insert into tracks 
 	values(1,'first', 8 , 3.5);
@@ -108,6 +111,12 @@ insert into tracks
 
 insert into tracks 
 	values(15,'короче', 5 , 5.14);
+	
+insert into tracks 
+	values(16,'короче', 10 , 5.14);	
+	
+insert into tracks 
+	values(17,'досвидули', 9 , 5);	
 	
 insert into collection 
 	values(1,'нулевые', 2010);
@@ -157,6 +166,9 @@ insert into GenresSinger
 insert into GenresSinger 
 	values(8, 2, 8);
 	
+insert into GenresSinger 
+	values(9, 3, 8);	
+	
 insert into SingerAlbum 
 	values(1, 1, 8);
 	
@@ -184,6 +196,9 @@ insert into SingerAlbum
 
 insert into SingerAlbum 
 	values(9, 9, 5);
+
+insert into SingerAlbum 
+	values(10, 10, 5);
 
 
 insert into collection_of_tracks
